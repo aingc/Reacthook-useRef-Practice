@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, useRef } from 'react'
 
-function App() {
+export default function App() {
+  const [name, setName] = useState('');
+  /*const renderCount = useRef(1) //persisted between current renders
+
+  useEffect(() => {
+    renderCount.current = renderCount.current + 1
+  });*/
+  const prevName = useRef()
+
+  /*const focus = () => {
+    inputRef.current.focus()
+  }*/
+
+  useEffect(() => {
+    prevName.current = name
+  }, [name]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <input value={name} onChange={e => setName(e.target.value)}/>
+      <div>My name is {name} and it used to be {prevName.current}</div>
+    </>
+  )
 }
-
-export default App;
